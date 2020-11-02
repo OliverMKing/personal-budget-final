@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const jwt = require("jsonwebtoken");
 const exjwt = require("express-jwt");
+require("dotenv").config();
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -11,9 +12,8 @@ app.use((req, res, next) => {
 
 const PORT = 3001;
 
-const secretKey = "This should be changed to an env variable";
 const jwtMW = exjwt({
-  secret: secretKey,
+  secret: process.env.jwt_secret,
   algorithms: ["HS256"],
 });
 
@@ -56,7 +56,7 @@ app.use(function (err, req, res, next) {
     res.status(401).json({
       success: false,
       officialError: err,
-      err: "You must be logged in to do that",
+      err: "You must be logged in",
     });
   } else {
     next(err);
