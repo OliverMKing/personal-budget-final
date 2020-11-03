@@ -22,6 +22,7 @@ const dbConnect = mysql.createConnection({
   password: process.env.db_pass,
   database: process.env.db,
 });
+dbConnect.connect();
 
 const jwtMW = exJwt({
   secret: process.env.jwt_secret,
@@ -32,7 +33,6 @@ const jwtMW = exJwt({
 app.post("/api/signup", (req, res) => {
   const { username, password } = req.body;
 
-  dbConnect.connect();
   const sql = `INSERT INTO user (username, password) VALUES ('${username}', '${password}')`;
   dbConnect.query(sql, (error, result) => {
     if (error) throw error;
@@ -45,35 +45,31 @@ app.post("/api/signup", (req, res) => {
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
 
-  dbConnect.connect();
-  dbConnect.query("SELECT * FROM user", (error, response) => {
-    dbConnect.end();
+  dbConnect.query("SELECT * FROM user", (error, result) => {
     if (error) throw error;
-    console.log("users: ");
-    console.log(response);
-  });
-
-  for (let user of [{ username: "test", password: "test" }]) {
-    if (username === user.username && password === user.password) {
-      let token = jwt.sign(
-        { id: user.id, username: user.username },
-        process.env.jwt_secret,
-        { expiresIn: "7d" }
-      );
-      res.json({
-        success: true,
-        err: null,
-        token,
-      });
-      break;
-    } else {
-      res.status(401).json({
-        success: false,
-        token: null,
-        err: "Username or password is incorrect",
-      });
+    for (let user of result) {
+      if (user.username === username && user.password === password) {
+        console.log("User is valid");
+        let token = jwt.sign(
+          { id: user.id, username: user.username },
+          process.env.jwt_secret,
+          { expiresIn: "7d" }
+        );
+        res.json({
+          success: true,
+          err: null,
+          token,
+        });
+        return;
+      }
     }
-  }
+    console.log("User is invalid");
+    res.status(401).json({
+      success: false,
+      token: null,
+      err: "Username or password is incorrect",
+    });
+  });
 });
 
 app.get("/api/isLoggedIn", jwtMW, (req, res) => {
