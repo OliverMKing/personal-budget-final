@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const jwt = require("jsonwebtoken");
-const exjwt = require("express-jwt");
+const exJwt = require("express-jwt");
+const mysql = require("mysql");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
 app.use((req, res, next) => {
@@ -9,23 +11,53 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-type,Authorization");
   next();
 });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const PORT = 3001;
 
-const jwtMW = exjwt({
+const dbConnect = mysql.createConnection({
+  host: process.env.db_host,
+  user: process.env.db_user,
+  password: process.env.db_pass,
+  database: process.env.db,
+});
+
+const jwtMW = exJwt({
   secret: process.env.jwt_secret,
   algorithms: ["HS256"],
+});
+
+// Creates user account
+app.post("/api/signup", (req, res) => {
+  const { username, password } = req.body;
+
+  dbConnect.connect();
+  const sql = `INSERT INTO user (username, password) VALUES ('${username}', '${password}')`;
+  dbConnect.query(sql, (error, result) => {
+    if (error) throw error;
+    console.log("1 new account added");
+  });
+  res.json({ success: true, err: null });
 });
 
 // Logs in user
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
 
+  dbConnect.connect();
+  dbConnect.query("SELECT * FROM user", (error, response) => {
+    dbConnect.end();
+    if (error) throw error;
+    console.log("users: ");
+    console.log(response);
+  });
+
   for (let user of [{ username: "test", password: "test" }]) {
     if (username === user.username && password === user.password) {
       let token = jwt.sign(
         { id: user.id, username: user.username },
-        secretKey,
+        process.env.jwt_secret,
         { expiresIn: "7d" }
       );
       res.json({
