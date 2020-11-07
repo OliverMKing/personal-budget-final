@@ -5,6 +5,7 @@ import axios from "axios";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [failure, setFailure] = useState("");
   const history = useHistory();
 
   const handleUsernameChange = (e) => {
@@ -24,6 +25,7 @@ function Login() {
         history.push("/");
       })
       .catch((err) => {
+        setFailure("Username or password not valid. Please try again.");
         console.log(err);
       });
   };
@@ -43,6 +45,7 @@ function Login() {
         />
         <input type="submit" value="Submit" />
       </form>
+      {failure.length > 0 && <p>{failure}</p>}
     </div>
   );
 }
