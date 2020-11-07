@@ -4,6 +4,8 @@ import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import Navbar from "./Components/Navbar";
 import Logout from "./Pages/Logout";
+import Dashboard from "./Pages/Dashboard";
+import authenticatedHOC from "./Components/AuthenticatedHoc";
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
           <Route path="/logout">
             <Logout />
           </Route>
+          <Route path="/dashboard">{authenticatedHOC(Dashboard)}</Route>
           <Route path="/">
             <Index />
           </Route>

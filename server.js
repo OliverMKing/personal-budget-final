@@ -46,7 +46,10 @@ app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
 
   dbConnect.query("SELECT * FROM user", (error, result) => {
-    if (error) throw error;
+    if (error) {
+      console.log(error);
+      return;
+    }
     for (let user of result) {
       if (user.username === username && user.password === password) {
         console.log("User is valid");

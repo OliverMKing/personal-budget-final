@@ -31,7 +31,7 @@ function Navbar() {
       )}
 
       <li>
-        <Link to="/">Dashboard</Link>
+        <Link to="/dashboard">Dashboard</Link>
       </li>
       <li>
         <Link to="/">Configure budget</Link>
