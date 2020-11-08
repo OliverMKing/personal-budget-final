@@ -34,7 +34,7 @@ function Navbar() {
         <Link to="/dashboard">Dashboard</Link>
       </li>
       <li>
-        <Link to="/">Configure budget</Link>
+        <Link to="/configure-budget">Configure budget</Link>
       </li>
     </ul>
   );

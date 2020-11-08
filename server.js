@@ -75,11 +75,39 @@ app.post("/api/login", (req, res) => {
   });
 });
 
-app.get("/api/isLoggedIn", jwtMW, (req, res) => {
-  res.json({
-    success: true,
-    loggedIn: true,
-  });
+// Return user's budget
+app.get("/api/budget", jwtMW, (req, res) => {
+  dbConnect.query(
+    `SELECT * FROM budget 
+      WHERE id IN 
+        (SELECT budget_id FROM budget_user WHERE user_id=${req.user.id})`,
+    (error, result) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      res.json({
+        budget: result,
+      });
+    }
+  );
+});
+
+// Deletes budget item
+app.get("/api/budget/:id", jwtMW, (req, res) => {
+  dbConnect.query(
+    `DELETE FROM budget WHERE id=${req.params.id}`,
+    (error, result) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      console.log(result);
+      res.json({
+        deleted: true,
+      });
+    }
+  );
 });
 
 app.use(function (err, req, res, next) {
