@@ -110,6 +110,34 @@ app.get("/api/budget/:id", jwtMW, (req, res) => {
   );
 });
 
+// Adds budget item
+app.post("/api/budget", jwtMW, (req, res) => {
+  const { name, value } = req.body;
+  const user_id = req.user.id;
+  const sql = `INSERT INTO budget (title, budget) VALUES ('${name}', ${value})`;
+  dbConnect.query(sql, (error, result) => {
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    const budget_id = result.insertId;
+    dbConnect.query(
+      `INSERT INTO budget_user (budget_id, user_id) VALUES (${budget_id}, ${user_id})`,
+      (errorMessage, resultMessage) => {
+        if (errorMessage) {
+          console.log(errorMessage);
+          return;
+        }
+        res.json({
+          added: true,
+          budgetId: budget_id,
+        });
+      }
+    );
+  });
+});
+
 app.use(function (err, req, res, next) {
   if (err.name === "UnauthorizedError") {
     res.status(401).json({
