@@ -10,7 +10,7 @@ const authenticatedHoc = (Component) => {
       <div>
         <h1>You must be logged in</h1>
         <p>
-          <Link to="/login">Log in</Link> or <Link to="signup">signup</Link> to
+          <Link to="/login">Log in</Link> or <Link to="/signup">signup</Link> to
           view the contents of this page.
         </p>
       </div>

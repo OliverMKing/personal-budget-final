@@ -11,31 +11,60 @@ function Navbar() {
   }, [location]);
 
   return (
-    <ul>
-      <li>
-        <Link to="/">Home</Link>
+    <ul className="mb-4 mt-4">
+      <li className="inline-block">
+        <Link
+          className="bg-red-500 hover:bg-red-700 text-white font-bold rounded px-4 py-2"
+          to="/"
+        >
+          Home
+        </Link>
       </li>
+      <li className="inline-block pl-2">
+        <Link
+          className="bg-red-500 hover:bg-red-700 text-white font-bold rounded px-4 py-2"
+          to="/dashboard"
+        >
+          Dashboard
+        </Link>
+      </li>
+      <li className="inline-block pl-2">
+        <Link
+          className="bg-red-500 hover:bg-red-700 text-white font-bold rounded px-4 py-2"
+          to="/configure-budget"
+        >
+          Configure budget
+        </Link>
+      </li>{" "}
       {loggedIn ? (
-        <li>
-          <Link to="/logout">Logout</Link>
+        <li className="inline-block float-right">
+          <Link
+            className="bg-red-500 hover:bg-red-700 text-white font-bold rounded px-4 py-2"
+            to="/logout"
+          >
+            Logout
+          </Link>
         </li>
       ) : (
         <>
-          <li>
-            <Link to="/login">Login</Link>
+          <li className="inline-block float-right">
+            <Link
+              className="bg-red-500 hover:bg-red-700 text-white font-bold rounded px-4 py-2"
+              to="/login"
+            >
+              Login
+            </Link>
           </li>
-          <li>
-            <Link to="/signup">Signup</Link>
+          <li className="inline-block pr-2 float-right">
+            <Link
+              className="bg-red-500 hover:bg-red-700 text-white font-bold rounded px-4 py-2"
+              to="/signup"
+            >
+              Signup
+            </Link>
           </li>
         </>
       )}
-
-      <li>
-        <Link to="/dashboard">Dashboard</Link>
-      </li>
-      <li>
-        <Link to="/configure-budget">Configure budget</Link>
-      </li>
     </ul>
   );
 }
