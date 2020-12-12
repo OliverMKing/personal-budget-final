@@ -42,25 +42,29 @@ function Dashboard() {
       ) : (
         <>
           <h2 className="text-2xl">Pie Chart</h2>
-          <div style={{ width: "500px", padding: "2rem" }}>
-            <VictoryPie
-              theme={VictoryTheme.material}
-              labelComponent={<VictoryLabel renderInPortal />}
-              data={budget.map((budgetItem) => {
-                return { x: budgetItem.title, y: budgetItem.budget };
-              })}
-            />
-          </div>
-          <h2 className="text-2xl">Bar Chart</h2>
-          <div style={{ width: "500px", padding: "2rem" }}>
-            <VictoryChart theme={VictoryTheme.material} domainPadding={10}>
-              <VictoryBar
+          <div className="flex items-center justify-center">
+            <div style={{ width: "500px" }}>
+              <VictoryPie
                 theme={VictoryTheme.material}
+                labelComponent={<VictoryLabel renderInPortal />}
                 data={budget.map((budgetItem) => {
                   return { x: budgetItem.title, y: budgetItem.budget };
                 })}
               />
-            </VictoryChart>
+            </div>
+          </div>
+          <h2 className="text-2xl">Bar Chart</h2>
+          <div className="flex items-center justify-center">
+            <div style={{ width: "500px" }}>
+              <VictoryChart theme={VictoryTheme.material} domainPadding={10}>
+                <VictoryBar
+                  theme={VictoryTheme.material}
+                  data={budget.map((budgetItem) => {
+                    return { x: budgetItem.title, y: budgetItem.budget };
+                  })}
+                />
+              </VictoryChart>
+            </div>
           </div>
         </>
       )}
