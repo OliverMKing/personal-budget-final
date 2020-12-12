@@ -25,7 +25,7 @@ function Login() {
         history.push("/");
       })
       .catch((err) => {
-        setFailure("Username or password not valid. Please try again.");
+        setFailure("Username and password not valid. Please try again.");
         console.log(err);
       });
   };
@@ -33,6 +33,7 @@ function Login() {
   return (
     <div>
       <h1 className="text-3xl">Login</h1>
+      {failure.length > 0 && <div className="mt-4 text-red-500">{failure}</div>}
       <form className="mt-4" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label>Username</label>
@@ -59,7 +60,6 @@ function Login() {
           value="Submit"
         />
       </form>
-      {failure.length > 0 && <p>{failure}</p>}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import axios from "axios";
 function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const history = useHistory();
 
   const handleUsernameChange = (e) => {
@@ -17,10 +18,18 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validate email and password
+    if (username.length === 0 || password.length === 0) {
+      setError("Username and password must be filled");
+      return;
+    }
+
     axios
       .post("http://localhost:3001/api/signup", { username, password })
       .then((res) => {
-        history.push("/");
+        console.log(res);
+        history.push("/login");
       })
       .catch((err) => {
         console.log(err);
@@ -30,6 +39,7 @@ function Signup() {
   return (
     <div>
       <h1 className="text-3xl">Signup</h1>
+      {error.length !== 0 && <div className="mt-4 text-red-500">{error}</div>}
       <form className="mt-4" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label>Username</label>
