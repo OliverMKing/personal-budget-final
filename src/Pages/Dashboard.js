@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   VictoryPie,
@@ -30,28 +31,39 @@ function Dashboard() {
   }, []);
   return (
     <>
-      <h1>Dashboard</h1>
-      <h2>Pie Chart</h2>
-      <div style={{ width: "500px", padding: "2rem" }}>
-        <VictoryPie
-          theme={VictoryTheme.material}
-          labelComponent={<VictoryLabel renderInPortal />}
-          data={budget.map((budgetItem) => {
-            return { x: budgetItem.title, y: budgetItem.budget };
-          })}
-        />
-      </div>
-      <h2>Bar Chart</h2>
-      <div style={{ width: "500px", padding: "2rem" }}>
-        <VictoryChart theme={VictoryTheme.material} domainPadding={10}>
-          <VictoryBar
-            theme={VictoryTheme.material}
-            data={budget.map((budgetItem) => {
-              return { x: budgetItem.title, y: budgetItem.budget };
-            })}
-          />
-        </VictoryChart>
-      </div>
+      <h1 className="text-3xl">Dashboard</h1>{" "}
+      {budget.length === 0 ? (
+        <div className="mt-2">
+          You have no entries in your budget.{" "}
+          <Link to="configure-budget" className="text-blue-500">
+            Add them now?
+          </Link>
+        </div>
+      ) : (
+        <>
+          <h2 className="text-2xl">Pie Chart</h2>
+          <div style={{ width: "500px", padding: "2rem" }}>
+            <VictoryPie
+              theme={VictoryTheme.material}
+              labelComponent={<VictoryLabel renderInPortal />}
+              data={budget.map((budgetItem) => {
+                return { x: budgetItem.title, y: budgetItem.budget };
+              })}
+            />
+          </div>
+          <h2 className="text-2xl">Bar Chart</h2>
+          <div style={{ width: "500px", padding: "2rem" }}>
+            <VictoryChart theme={VictoryTheme.material} domainPadding={10}>
+              <VictoryBar
+                theme={VictoryTheme.material}
+                data={budget.map((budgetItem) => {
+                  return { x: budgetItem.title, y: budgetItem.budget };
+                })}
+              />
+            </VictoryChart>
+          </div>
+        </>
+      )}
     </>
   );
 }
