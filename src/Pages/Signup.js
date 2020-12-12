@@ -29,18 +29,31 @@ function Signup() {
 
   return (
     <div>
-      <h1>Signup</h1>
-      <form onSubmit={handleSubmit}>
-        <label>Username</label>
-        <input type="text" value={username} onChange={handleUsernameChange} />
-
-        <label>Password</label>
+      <h1 className="text-3xl">Signup</h1>
+      <form className="mt-4" onSubmit={handleSubmit}>
+        <div className="flex flex-col">
+          <label>Username</label>
+          <input
+            className="p-1 border border-gray-500 rounded"
+            type="text"
+            value={username}
+            onChange={handleUsernameChange}
+          />
+        </div>
+        <div className="flex flex-col mt-2">
+          <label>Password</label>
+          <input
+            className="p-1 border border-gray-500 rounded"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </div>
         <input
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
+          className="w-full mt-2 p-2 rounded cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold"
+          type="submit"
+          value="Submit"
         />
-        <input type="submit" value="Submit" />
       </form>
     </div>
   );
