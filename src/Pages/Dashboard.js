@@ -6,6 +6,8 @@ import {
   VictoryChart,
   VictoryTheme,
   VictoryBar,
+  VictoryStack,
+  VictoryArea,
   VictoryLabel,
 } from "victory";
 
@@ -64,6 +66,21 @@ function Dashboard() {
                   })}
                 />
               </VictoryChart>
+            </div>
+          </div>
+          <h2 className="text-2xl">Stack Chart</h2>
+          <div className="flex items-center justify-center">
+            <div style={{ width: "500px" }}>
+              <VictoryStack domainPadding={10}>
+                {budget.map((budgetItem) => {
+                  return (
+                    <VictoryBar
+                      barWidth={500}
+                      data={[{ x: budgetItem.title, y: budgetItem.budget }]}
+                    />
+                  );
+                })}
+              </VictoryStack>
             </div>
           </div>
         </>
