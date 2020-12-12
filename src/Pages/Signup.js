@@ -62,7 +62,7 @@ function Signup() {
         <input
           className="w-full mt-2 p-2 rounded cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold"
           type="submit"
-          value="Submit"
+          value="Signup"
         />
       </form>
     </div>
