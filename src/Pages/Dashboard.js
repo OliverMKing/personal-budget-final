@@ -77,6 +77,8 @@ function Dashboard() {
                   return (
                     <VictoryBar
                       barWidth={500}
+                      labelComponent={<VictoryLabel />}
+                      labels={[budgetItem.title]}
                       data={[{ x: budgetItem.title, y: budgetItem.budget }]}
                     />
                   );
