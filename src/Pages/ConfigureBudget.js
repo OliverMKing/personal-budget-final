@@ -12,7 +12,7 @@ function ConfigureBudget() {
     const token = localStorage.getItem("jwt");
 
     axios
-      .get("http://localhost:3000/api/budget", {
+      .get("http://159.65.225.17:3000/api/budget", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -29,7 +29,7 @@ function ConfigureBudget() {
   const deleteItem = (id) => {
     const token = localStorage.getItem("jwt");
     axios
-      .get(`http://localhost:3000/api/budget/${id}`, {
+      .get(`http://159.65.225.17:3000/api/budget/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -56,7 +56,7 @@ function ConfigureBudget() {
 
     axios
       .post(
-        "http://localhost:3000/api/budget",
+        "http://159.65.225.17:3000/api/budget",
         {
           name,
           value,

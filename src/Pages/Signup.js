@@ -26,7 +26,7 @@ function Signup() {
     }
 
     axios
-      .post("http://localhost:3000/api/signup", { username, password })
+      .post("http://159.65.225.17:3000/api/signup", { username, password })
       .then((res) => {
         console.log(res);
         history.push("/login");
