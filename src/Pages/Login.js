@@ -19,7 +19,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/api/login", { username, password })
+      .post("http://206.81.9.116/api/login", { username, password })
       .then((res) => {
         localStorage.setItem("jwt", res.data.token);
         history.push("/");

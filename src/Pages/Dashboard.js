@@ -18,7 +18,7 @@ function Dashboard() {
     const token = localStorage.getItem("jwt");
 
     axios
-      .get("http://localhost:3001/api/budget", {
+      .get("http://206.81.9.116/api/budget", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
