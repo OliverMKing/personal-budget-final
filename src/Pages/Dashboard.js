@@ -7,7 +7,6 @@ import {
   VictoryTheme,
   VictoryBar,
   VictoryStack,
-  VictoryArea,
   VictoryLabel,
 } from "victory";
 
@@ -60,7 +59,6 @@ function Dashboard() {
             <div style={{ width: "500px" }}>
               <VictoryChart theme={VictoryTheme.material} domainPadding={10}>
                 <VictoryBar
-                  theme={VictoryTheme.material}
                   data={budget.map((budgetItem) => {
                     return { x: budgetItem.title, y: budgetItem.budget };
                   })}
@@ -71,7 +69,7 @@ function Dashboard() {
           <h2 className="text-2xl">Stack Chart</h2>
           <div className="flex items-center justify-center">
             <div style={{ width: "500px" }}>
-              <VictoryStack domainPadding={10}>
+              <VictoryStack domainPadding={10} theme={VictoryTheme.material}>
                 {budget.map((budgetItem) => {
                   return (
                     <VictoryBar

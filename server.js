@@ -22,7 +22,7 @@ const dbConnect = mysql.createConnection({
   password: process.env.db_pass,
   database: process.env.db,
 });
-dbConnect.connect();
+dbConnect.connect((err) => console.log(err));
 
 const jwtMW = exJwt({
   secret: process.env.jwt_secret,
