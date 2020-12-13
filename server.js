@@ -1,11 +1,13 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const exJwt = require("express-jwt");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
+app.use(cors());
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Access-Control-Allow-Headers", "Content-type,Authorization");
