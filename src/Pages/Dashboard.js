@@ -57,8 +57,11 @@ function Dashboard() {
           <h2 className="text-2xl">Bar Chart</h2>
           <div className="flex items-center justify-center">
             <div style={{ width: "500px" }}>
-              <VictoryChart theme={VictoryTheme.material} domainPadding={10}>
+              <VictoryChart domainPadding={10} theme={VictoryTheme.material}>
                 <VictoryBar
+                  style={{
+                    data: { fill: "#c43a31" },
+                  }}
                   data={budget.map((budgetItem) => {
                     return { x: budgetItem.title, y: budgetItem.budget };
                   })}
