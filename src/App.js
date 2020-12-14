@@ -13,7 +13,7 @@ function App() {
     <Router>
       <div className="p-4">
         <Navbar />
-        <div className="mt-8">
+        <main className="mt-8">
           <Switch>
             <Route path="/login">
               <Login />
@@ -32,7 +32,7 @@ function App() {
               <Index />
             </Route>
           </Switch>
-        </div>
+        </main>
       </div>
     </Router>
   );

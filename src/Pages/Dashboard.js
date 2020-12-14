@@ -34,58 +34,64 @@ function Dashboard() {
     <>
       <h1 className="text-3xl">Dashboard</h1>{" "}
       {budget.length === 0 ? (
-        <div className="mt-2">
+        <section className="mt-2">
           You have no entries in your budget.{" "}
           <Link to="configure-budget" className="text-blue-500">
             Add them now?
           </Link>
-        </div>
+        </section>
       ) : (
         <>
-          <h2 className="text-2xl">Pie Chart</h2>
-          <div className="flex items-center justify-center">
-            <div style={{ width: "500px" }}>
-              <VictoryPie
-                theme={VictoryTheme.material}
-                labelComponent={<VictoryLabel renderInPortal />}
-                data={budget.map((budgetItem) => {
-                  return { x: budgetItem.title, y: budgetItem.budget };
-                })}
-              />
-            </div>
-          </div>
-          <h2 className="text-2xl">Bar Chart</h2>
-          <div className="flex items-center justify-center">
-            <div style={{ width: "500px" }}>
-              <VictoryChart domainPadding={10} theme={VictoryTheme.material}>
-                <VictoryBar
-                  style={{
-                    data: { fill: "#c43a31" },
-                  }}
+          <section>
+            <h2 className="text-2xl">Pie Chart</h2>
+            <div className="flex items-center justify-center">
+              <div style={{ width: "500px" }}>
+                <VictoryPie
+                  theme={VictoryTheme.material}
+                  labelComponent={<VictoryLabel renderInPortal />}
                   data={budget.map((budgetItem) => {
                     return { x: budgetItem.title, y: budgetItem.budget };
                   })}
                 />
-              </VictoryChart>
+              </div>
             </div>
-          </div>
-          <h2 className="text-2xl">Stack Chart</h2>
-          <div className="flex items-center justify-center">
-            <div style={{ width: "500px" }}>
-              <VictoryStack domainPadding={10} theme={VictoryTheme.material}>
-                {budget.map((budgetItem) => {
-                  return (
-                    <VictoryBar
-                      barWidth={500}
-                      labelComponent={<VictoryLabel />}
-                      labels={[budgetItem.title]}
-                      data={[{ x: budgetItem.title, y: budgetItem.budget }]}
-                    />
-                  );
-                })}
-              </VictoryStack>
+          </section>
+          <section>
+            <h2 className="text-2xl">Bar Chart</h2>
+            <div className="flex items-center justify-center">
+              <div style={{ width: "500px" }}>
+                <VictoryChart domainPadding={10} theme={VictoryTheme.material}>
+                  <VictoryBar
+                    style={{
+                      data: { fill: "#c43a31" },
+                    }}
+                    data={budget.map((budgetItem) => {
+                      return { x: budgetItem.title, y: budgetItem.budget };
+                    })}
+                  />
+                </VictoryChart>
+              </div>
             </div>
-          </div>
+          </section>
+          <section>
+            <h2 className="text-2xl">Stack Chart</h2>
+            <div className="flex items-center justify-center">
+              <div style={{ width: "500px" }}>
+                <VictoryStack domainPadding={10} theme={VictoryTheme.material}>
+                  {budget.map((budgetItem) => {
+                    return (
+                      <VictoryBar
+                        barWidth={500}
+                        labelComponent={<VictoryLabel />}
+                        labels={[budgetItem.title]}
+                        data={[{ x: budgetItem.title, y: budgetItem.budget }]}
+                      />
+                    );
+                  })}
+                </VictoryStack>
+              </div>
+            </div>
+          </section>
         </>
       )}
     </>
