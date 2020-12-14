@@ -75,6 +75,7 @@ function ConfigureBudget() {
             id: res.data.budgetId,
             title: name,
             budget: value,
+            curr_amount: 0,
           },
         ]);
         setName("");
