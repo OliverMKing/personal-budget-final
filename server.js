@@ -140,6 +140,22 @@ app.post("/api/budget", jwtMW, (req, res) => {
   });
 });
 
+// Modifies amount for budget item
+app.post("/api/budget/:id", jwtMW, (req, res) => {
+  const { amount } = req.body;
+  dbConnect.query(
+    `UPDATE budget SET curr_amount=${amount} WHERE id=${req.params.id}`,
+    (error, result) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      console.log(result);
+      res.json({ added: true });
+    }
+  );
+});
+
 app.use(function (err, req, res, next) {
   if (err.name === "UnauthorizedError") {
     res.status(401).json({

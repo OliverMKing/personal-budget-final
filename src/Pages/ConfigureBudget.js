@@ -99,8 +99,30 @@ function ConfigureBudget() {
   };
 
   const handleExpenseChange = (e) => {
-    console.log(selectedItem);
-    console.log(budget);
+    let copy = Array.from(budget);
+    copy[selectedItem].curr_amount = e.target.value;
+    setBudget(copy);
+  };
+
+  const amountChange = () => {
+    const token = localStorage.getItem("jwt");
+    const id = budget[selectedItem].id;
+    axios
+      .post(
+        `${process.env.REACT_APP_API_SERVER}/api/budget/${id}`,
+        {
+          amount: budget[selectedItem].curr_amount,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -113,7 +135,7 @@ function ConfigureBudget() {
             {budget.map((item) => {
               return (
                 <li key={item.id}>
-                  {`${item.title} is ${item.budget}`} -{" "}
+                  {`${item.title}. Budget: ${item.budget}. Current amount: ${item.curr_amount}. `}{" "}
                   <span
                     className="cursor-pointer text-red-500"
                     onClick={() => deleteItem(item.id)}
@@ -129,7 +151,7 @@ function ConfigureBudget() {
 
       {budget.length > 0 && (
         <section>
-          <h2 className="text-xl mt-4">Modify budget expense</h2>
+          <h2 className="text-xl mt-4">Modify current budget amount</h2>
           <div className="flex flex-col">
             <label>Budget item</label>
             <select
@@ -148,13 +170,17 @@ function ConfigureBudget() {
             <label>New amount</label>
             <input
               className="p-1 border border-gray-500 rounded"
-              type="text"
-              value={name}
+              type="number"
+              value={budget[selectedItem].curr_amount}
               onChange={handleExpenseChange}
+              min={0}
             />
           </div>
-          <button className="w-full mt-2 p-2 rounded cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold">
-            Modify
+          <button
+            onClick={amountChange}
+            className="w-full mt-2 p-2 rounded cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold"
+          >
+            Modify Item
           </button>
         </section>
       )}
@@ -180,6 +206,7 @@ function ConfigureBudget() {
             <input
               className="p-1 border border-gray-500 rounded"
               type="number"
+              min="0"
               value={value}
               onChange={handleValueChange}
             />
