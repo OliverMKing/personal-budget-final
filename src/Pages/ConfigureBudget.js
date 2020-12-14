@@ -6,6 +6,7 @@ function ConfigureBudget() {
   const [name, setName] = useState("");
   const [value, setValue] = useState(0);
   const [failure, setFailure] = useState("");
+  const [selectedItem, setSelectedItem] = useState(0);
 
   // Call API
   useEffect(() => {
@@ -93,38 +94,77 @@ function ConfigureBudget() {
     setValue(e.target.value);
   };
 
+  const handleBudgetItemSelect = (e) => {
+    setSelectedItem(e.target.value);
+  };
+
+  const handleExpenseChange = (e) => {
+    console.log(selectedItem);
+    console.log(budget);
+  };
+
   return (
     <>
       <h1 className="text-3xl">Configure Budget</h1>
-      <section>
-        {budget.length > 0 && (
-          <>
-            <h2 className="text-xl mt-2">Current budget</h2>
-            <ul className="mt-4">
-              {budget.map((item) => {
-                return (
-                  <li key={item.id}>
-                    {`${item.title} is ${item.budget}`} -{" "}
-                    <span
-                      className="cursor-pointer text-red-500"
-                      onClick={() => deleteItem(item.id)}
-                    >
-                      Delete
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-          </>
-        )}
-      </section>
+      {budget.length > 0 && (
+        <section>
+          <h2 className="text-xl mt-2">Current budget</h2>
+          <ul className="mt-4">
+            {budget.map((item) => {
+              return (
+                <li key={item.id}>
+                  {`${item.title} is ${item.budget}`} -{" "}
+                  <span
+                    className="cursor-pointer text-red-500"
+                    onClick={() => deleteItem(item.id)}
+                  >
+                    Delete
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
+      {budget.length > 0 && (
+        <section>
+          <h2 className="text-xl mt-4">Modify budget expense</h2>
+          <div className="flex flex-col">
+            <label>Budget item</label>
+            <select
+              value={selectedItem}
+              onChange={handleBudgetItemSelect}
+              className="p-1 border border-gray-500 rounded"
+            >
+              {budget.map((item, index) => (
+                <option key={item.title} value={index}>
+                  {item.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col mt-2">
+            <label>New amount</label>
+            <input
+              className="p-1 border border-gray-500 rounded"
+              type="text"
+              value={name}
+              onChange={handleExpenseChange}
+            />
+          </div>
+          <button className="w-full mt-2 p-2 rounded cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold">
+            Modify
+          </button>
+        </section>
+      )}
 
       <section>
-        <h2 className="text-xl mt-2">Add new budget item</h2>
+        <h2 className="text-xl mt-8">Add new budget item</h2>
         {failure.length > 0 && (
           <div className="mt-4 text-red-500">{failure}</div>
         )}
-        <form className="mt-4" onSubmit={handleSubmit}>
+        <form className="mt-2" onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <label>Name</label>
             <input
