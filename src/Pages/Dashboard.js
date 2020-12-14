@@ -44,6 +44,7 @@ function Dashboard() {
         <>
           <section>
             <h2 className="text-2xl">Pie Chart</h2>
+            <h3 className="text-xl">Budget</h3>
             <div className="flex items-center justify-center">
               <div style={{ width: "500px" }}>
                 <VictoryPie
@@ -55,9 +56,22 @@ function Dashboard() {
                 />
               </div>
             </div>
+            <h3 className="text-xl">Actual</h3>
+            <div className="flex items-center justify-center">
+              <div style={{ width: "500px" }}>
+                <VictoryPie
+                  theme={VictoryTheme.material}
+                  labelComponent={<VictoryLabel renderInPortal />}
+                  data={budget.map((budgetItem) => {
+                    return { x: budgetItem.title, y: budgetItem.curr_amount };
+                  })}
+                />
+              </div>
+            </div>
           </section>
           <section>
             <h2 className="text-2xl">Bar Chart</h2>
+            <h3 className="text-xl">Budget</h3>
             <div className="flex items-center justify-center">
               <div style={{ width: "500px" }}>
                 <VictoryChart domainPadding={10} theme={VictoryTheme.material}>
@@ -72,9 +86,25 @@ function Dashboard() {
                 </VictoryChart>
               </div>
             </div>
+            <h3 className="text-xl">Actual</h3>
+            <div className="flex items-center justify-center">
+              <div style={{ width: "500px" }}>
+                <VictoryChart domainPadding={10} theme={VictoryTheme.material}>
+                  <VictoryBar
+                    style={{
+                      data: { fill: "#c43a31" },
+                    }}
+                    data={budget.map((budgetItem) => {
+                      return { x: budgetItem.title, y: budgetItem.curr_amount };
+                    })}
+                  />
+                </VictoryChart>
+              </div>
+            </div>
           </section>
           <section>
             <h2 className="text-2xl">Stack Chart</h2>
+            <h3 className="text-xl">Budget</h3>
             <div className="flex items-center justify-center">
               <div style={{ width: "500px" }}>
                 <VictoryStack domainPadding={10} theme={VictoryTheme.material}>
@@ -85,6 +115,25 @@ function Dashboard() {
                         labelComponent={<VictoryLabel />}
                         labels={[budgetItem.title]}
                         data={[{ x: budgetItem.title, y: budgetItem.budget }]}
+                      />
+                    );
+                  })}
+                </VictoryStack>
+              </div>
+            </div>
+            <h3 className="text-xl">Acutal</h3>
+            <div className="flex items-center justify-center">
+              <div style={{ width: "500px" }}>
+                <VictoryStack domainPadding={10} theme={VictoryTheme.material}>
+                  {budget.map((budgetItem) => {
+                    return (
+                      <VictoryBar
+                        barWidth={500}
+                        labelComponent={<VictoryLabel />}
+                        labels={[budgetItem.title]}
+                        data={[
+                          { x: budgetItem.title, y: budgetItem.curr_amount },
+                        ]}
                       />
                     );
                   })}
