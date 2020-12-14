@@ -19,7 +19,10 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://159.65.225.17:3000/api/login", { username, password })
+      .post(`${process.env.REACT_APP_API_SERVER}/api/login`, {
+        username,
+        password,
+      })
       .then((res) => {
         localStorage.setItem("jwt", res.data.token);
         history.push("/");

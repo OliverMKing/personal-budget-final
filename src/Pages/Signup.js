@@ -26,7 +26,10 @@ function Signup() {
     }
 
     axios
-      .post("http://159.65.225.17:3000/api/signup", { username, password })
+      .post(`${process.env.REACT_APP_API_SERVER}/api/signup`, {
+        username,
+        password,
+      })
       .then((res) => {
         console.log(res);
         history.push("/login");

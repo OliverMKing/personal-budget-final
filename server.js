@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const PORT = 3001;
+const PORT = 3000;
 
 const dbConnect = mysql.createConnection({
   host: process.env.db_host,
@@ -32,10 +32,15 @@ app.post("/api/signup", (req, res) => {
 
   const sql = `INSERT INTO user (username, password) VALUES ('${username}', '${password}')`;
   dbConnect.query(sql, (error, result) => {
-    if (error) throw error;
+    if (error) {
+      res.status(400);
+      res.json({ success: false, err: "Account not added" });
+
+      throw error;
+    }
     console.log("1 new account added");
+    res.json({ success: true, err: null });
   });
-  res.json({ success: true, err: null });
 });
 
 // Logs in user
